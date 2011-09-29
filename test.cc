@@ -6,6 +6,18 @@
 #include <stdio.h>
 #endif
 
+inline Trigonum loadTriangleFromMemory(const int &addr) {
+	Vector e1( loadf( addr, 0 ), loadf( addr, 1 ), loadf(addr, 2 ) );
+	Vector e2( loadf(addr, 3 ), loadf(addr, 4 ), loadf(addr, 5 ) );
+	Vector e3( loadf(addr, 6 ), loadf(addr, 7 ), loadf(addr, 8 ) );
+	Trigonum triangle(e1, e2, e3, loadi(addr, 9), loadi(addr, 10));
+	return triangle;
+}
+
+inline PointLight loadLightFromMemory(int addr) {
+  return PointLight(loadVectorFromMemory(addr), Color(1.f, 1.f, 1.f));
+}
+
 int main()
 {
 	trax_setup();
@@ -13,32 +25,20 @@ int main()
 	int yres = loadi( 0, 4 );
 	int start_fb = GetFrameBuffer();
 	
-	float t = 0.f;
+	float t;
 	
-	bool flag = false; //this is kinda lame
-	
-	float ulen, aspect_ratio;
-	ulen = 0.194f;
-	aspect_ratio = 1.f;
+	PointLight light = loadLightFromMemory(loadi(0, 12));
 
-	Color color(1.0f, .3f, .2f);
-	Color background(0.f, 0.f, 0.f);
+	Color ambient_light(0.4f, 0.4f, 0.4f);
 	Color result;
 
-	// Uncomment this to get the first output
-//	Vector E(4.f, -15.f, -2.f);
-
-	Vector E(0.5f, 0.5f, 0.5f);
-
-	Vector Up(0.f, 0.f, 1.f);
-	Vector Lookat(0.f, 0.f, 0.f);
-	Box box(Vector(-1.f, -1.f, -1.f), Vector(1.f, 1.f, 1.f));
-	
 	Image image(xres, yres, start_fb);
 	
-	PinHoleCamera camera(E, Lookat, Up, aspect_ratio, ulen);
-	
+	PinHoleCamera camera(loadi(0, 10));
 	Ray ray;
+
+	int start_tris = loadi(0, 28);
+	int num_tris = loadi(0, 29);
 	for(int pix = atomicinc(0); pix < xres*yres; pix = atomicinc(0)){
 		int i = pix / xres;
 		int j = pix % xres;
@@ -47,10 +47,18 @@ int main()
 		float y = (float)(2.0f * (i - yres/2.0f + 0.5f)/yres);
 		
 		camera.make_ray(ray, x, y);
-		result = background;
-		if (box.intersects(ray))
-			result = color;
-		image.set(i, j, result);	
+
+		 for(int k = 0; k < num_tris; k++) {
+		  Trigonum tri = loadTriangleFromMemory(start_tris + (k * 11));
+
+		  t = tri.intersects(ray);
+		  if (t != 0.f) {
+			  result = tri.lambertian_shader(ray, t, light, ambient_light);
+			  image.set(i, j, result);
+			  break;
+		  }
+		}
+
 	}
 	trax_cleanup();
 }

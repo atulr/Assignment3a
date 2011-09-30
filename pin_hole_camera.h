@@ -26,9 +26,11 @@ public:
 		position = loadVectorFromMemory(address);
 		up = loadVectorFromMemory(address + 9);
 		look_at_point = loadVectorFromMemory(address + 12);
+
 		u = loadVectorFromMemory(address + 15);
 		v = loadVectorFromMemory(address + 18);
 		ulen = 0.194f;
+		aspect_ratio = 1.f;
 	}
 	void make_ray(Ray& ray, float x, float y);
 };

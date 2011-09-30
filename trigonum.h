@@ -20,6 +20,7 @@ class Trigonum {
 	Color surface_color();
 	float Ka();
 	float Kd();
+	bool intersects(Ray ray, float distance);
 	Vector normal();
 public:
 	Trigonum();
@@ -41,7 +42,7 @@ public:
 	Vector vertex2(){ return p2;}
 	Vector vertex3(){ return p3;}
 	float intersects(Ray ray);
-	Color lambertian_shader(Ray ray, float t, PointLight lights, Color ambient_light); //think of parameters
+	Color lambertian_shader(Ray ray, float t, PointLight lights, Color ambient_light);
 };
 
 

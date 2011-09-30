@@ -14,9 +14,20 @@ inline Trigonum loadTriangleFromMemory(const int &addr) {
 	return triangle;
 }
 
-inline PointLight loadLightFromMemory(int addr) {
-  return PointLight(loadVectorFromMemory(addr), Color(1.f, 1.f, 1.f));
+inline Vector loadFooFromMemory(const int &address) {
+	float x, y, z;
+	x = loadf(address, 0);
+	y = loadf(address, 1);
+	z = loadf(address, 2);
+	return Vector(x, y, z);
 }
+
+
+inline PointLight loadLightFromMemory(int addr) {
+  return PointLight(loadFooFromMemory(addr), Color(1.f, 1.f, 1.f));
+}
+
+
 
 int main()
 {
@@ -50,15 +61,14 @@ int main()
 
 		 for(int k = 0; k < num_tris; k++) {
 		  Trigonum tri = loadTriangleFromMemory(start_tris + (k * 11));
-
 		  t = tri.intersects(ray);
 		  if (t != 0.f) {
 			  result = tri.lambertian_shader(ray, t, light, ambient_light);
 			  image.set(i, j, result);
 			  break;
 		  }
+		  image.set(i, j, result);
 		}
-
 	}
 	trax_cleanup();
 }

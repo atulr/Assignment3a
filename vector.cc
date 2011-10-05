@@ -6,6 +6,15 @@
 #include <stdio.h>
 #endif
 
+Vector Vector::offset(float value) {
+	float x1, y1, z1;
+	x1 = (float)(x - value);
+	y1 = (float)(y - value);
+	z1 = (float)(z - value);
+	Vector new_vector(x1, y1, z1);
+	return new_vector;
+}
+
 Vector Vector::cross(Vector other) {
 	float x1, y1, z1;
 	x1 = (float)(y*other.z - z*other.y);

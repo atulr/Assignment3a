@@ -19,6 +19,7 @@ public:
 	float gety() {return y;}
 	float getz() {return z;}
 	float dot(Vector other);
+	Vector offset(float epsilon);
 	Vector normalize();
 	Vector cross(Vector other);
 	Vector add(Vector other);

@@ -12,16 +12,14 @@
 #include "vector.h"
 #include "point_light.h"
 #include "material.h"
+//#include "hit_record.h"
+
+class HitRecord;
 
 class Trigonum {
 	Vector p1, p2, p3;
 	int id;
 	Material mat;
-	Color surface_color();
-	float Ka();
-	float Kd();
-	bool intersects(Ray ray, float distance);
-	Vector normal();
 public:
 	Trigonum();
 	Trigonum(Vector point1, Vector point2, Vector point3, int i, int mat_id) {
@@ -29,20 +27,23 @@ public:
 		p2 = point2;
 		p3 = point3;
 		id = i;
-		//this can probably go somewhere else..
 		int start_matls = loadi(0, 9);
 		int shader_addr = start_matls + (mat_id * 25);
-		float Ka = 0.7f, Kd = 0.3f;
+		float Ka = 0.3f, Kd = 0.7f;
 		Color matl (loadf(shader_addr, 4), loadf(shader_addr, 5), loadf(shader_addr, 6));
 		Material material(matl, Ka, Kd);
 		mat = material;
-
 	}
+
+	Color surface_color();
+	float Ka();
+	float Kd();
+	int get_id();
 	Vector vertex1(){ return p1;}
 	Vector vertex2(){ return p2;}
 	Vector vertex3(){ return p3;}
-	float intersects(Ray ray);
-	Color lambertian_shader(Ray ray, float t, PointLight lights, Color ambient_light);
+	void intersects(HitRecord record, Ray ray, const int &address);
+	bool intersects_other_triangles(HitRecord record, Ray ray, float distance);
 };
 
 

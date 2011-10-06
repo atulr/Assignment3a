@@ -21,7 +21,7 @@ class Trigonum {
 	int id;
 	Material mat;
 public:
-	Trigonum();
+	Trigonum(){};
 	Trigonum(Vector point1, Vector point2, Vector point3, int i, int mat_id) {
 		p1 = point1;
 		p2 = point2;

@@ -5,7 +5,7 @@
  *      Author: atulrungta
  */
 #include "trax.hpp"
-//#include "hit_record.h"
+#include "hit_record.h"
 #include "trigonum.h"
 #include <stdlib.h>
 

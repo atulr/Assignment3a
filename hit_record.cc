@@ -27,6 +27,7 @@ bool HitRecord::hit(float t, const int &tri_address) {
 	if (t < distance) {
 		distance = t;
 		object = loadTriangleFromMemory(tri_address);
+
 		return true;
 	}
 	return false;

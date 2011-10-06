@@ -42,8 +42,8 @@ public:
 	Vector vertex1(){ return p1;}
 	Vector vertex2(){ return p2;}
 	Vector vertex3(){ return p3;}
-	void intersects(HitRecord record, Ray ray, const int &address);
-	bool intersects_other_triangles(HitRecord record, Ray ray, float distance);
+	void intersects(HitRecord &record, Ray ray, const int &address);
+	bool intersects_other_triangles(HitRecord &record, Ray ray, float distance);
 };
 
 

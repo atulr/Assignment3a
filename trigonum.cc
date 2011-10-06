@@ -38,13 +38,13 @@ Color Trigonum::surface_color() {
 	return mat.get_color();
 }
 
-void Trigonum::intersects(HitRecord hit_record, Ray ray, const int &tri_address) {
+void Trigonum::intersects(HitRecord &hit_record, Ray ray, const int &tri_address) {
 	Vector edge1 = p1.sub(p2);
 	Vector edge2 = p2.sub(p3);
 
 	Vector r1 = ray.get_direction().cross(edge2);
 	float denom = edge1.dot(r1);
-	float t = max_t;
+	float t = 0.f;
 	if (abs(denom) < eps) t = max_t;
 
 	float inv_denom = (float)1.f/denom;
@@ -58,12 +58,14 @@ void Trigonum::intersects(HitRecord hit_record, Ray ray, const int &tri_address)
 
 	if( b2 < 0.f || (float)(b1 + b2) > 1.f)
 		t = max_t;
-	if (t != max_t)
+
+	if (t != max_t) {
 		t = (float)((edge2.dot(r2)) * inv_denom);
-	hit_record.hit(t, tri_address);
+		hit_record.hit(t, tri_address);
+	}
 }
 
-bool Trigonum::intersects_other_triangles(HitRecord hit_record, Ray ray, float distance) {
+bool Trigonum::intersects_other_triangles(HitRecord &hit_record, Ray ray, float distance) {
 	int start_tris = loadi(0, 28);
 	int num_tris = loadi(0, 29);
 	float t;

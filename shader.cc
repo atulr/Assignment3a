@@ -14,8 +14,6 @@
 #endif
 
 inline Vector normal(Trigonum triangle) {
-//	Vector edge1 = triangle->vertex1().sub(triangle->vertex2());
-//	Vector edge2 = triangle->vertex2().sub(triangle->vertex3());;
 	Vector edge1 = triangle.vertex1().sub(triangle.vertex2());
 	Vector edge2 = triangle.vertex2().sub(triangle.vertex3());;
 
@@ -24,6 +22,7 @@ inline Vector normal(Trigonum triangle) {
 }
 
 Color Shader::lambertian(HitRecord hit_record, Ray ray, PointLight point_light, Color ambient_light) {
+
 	float costheta, cosphi;
 	Ray ray_to_light_source;
 	Trigonum tri = hit_record.obj_id();

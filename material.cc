@@ -6,14 +6,14 @@
 #include <stdio.h>
 #endif
 
-float Material::Ka() {
+float Mat::Ka() {
 	return ka;
 }
 
-float Material::Kd() {
+float Mat::Kd() {
 	return kd;
 }
 
-Color Material::get_color() {
+Color Mat::get_color() {
 	return color_of_material;
 }

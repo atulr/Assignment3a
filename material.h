@@ -3,14 +3,14 @@
 
 #include "color.h"
 
-class Material {
+class Mat {
 private:
 	Color color_of_material;
 	float ka;
 	float kd;
 public:
-	Material() {}
-	Material(Color material, float coefficient1, float coefficient2) {
+	Mat() {}
+	Mat(Color material, float coefficient1, float coefficient2) {
 		color_of_material = material;
 		ka = coefficient1;
 		kd = coefficient2;

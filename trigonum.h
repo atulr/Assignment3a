@@ -19,7 +19,7 @@ class HitRecord;
 class Trigonum {
 	Vector p1, p2, p3;
 	int id;
-	Material mat;
+	Mat mat;
 public:
 	Trigonum(){};
 	Trigonum(Vector point1, Vector point2, Vector point3, int i, int mat_id) {
@@ -31,7 +31,7 @@ public:
 		int shader_addr = start_matls + (mat_id * 25);
 		float Ka = 0.3f, Kd = 0.7f;
 		Color matl (loadf(shader_addr, 4), loadf(shader_addr, 5), loadf(shader_addr, 6));
-		Material material(matl, Ka, Kd);
+		Mat material(matl, Ka, Kd);
 		mat = material;
 	}
 

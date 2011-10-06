@@ -10,7 +10,7 @@
 
 class Sphere {
 	float x, y, z, radius;
-	Material material;
+	Mat material;
 	bool intersects(Ray ray, Sphere spheres[], float distance); //more parameters might be required
 	float closer_point(float a, float b, float c, float disc); //more parameters might be required
 	Color surface_color();
@@ -22,7 +22,7 @@ class Sphere {
 	}
 	Vector normal(Vector intersection);	
 public:
-	Sphere(float xval, float yval, float zval, float r, Material mat) {
+	Sphere(float xval, float yval, float zval, float r, Mat mat) {
 		x = xval;
 		y = yval;
 		z = zval;
